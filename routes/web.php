@@ -22,3 +22,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('user','Admin\UserController');
 
 Route::get('user/{use_id}', 'Admin\UserController@show');
+
+Route::post('/search','Admin\SearchController@show');

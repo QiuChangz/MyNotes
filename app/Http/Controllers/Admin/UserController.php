@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Notes;
 use App\User;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Note;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -43,7 +43,8 @@ class UserController extends Controller
         $notes->user_id = $request->user()->id;
 
         if ($notes->save()) {
-            return redirect('home');
+            $note=User::find(Auth::id())->Notes;
+            return redirect('home')->with(['notes' => $note]);
         } else {
             return redirect()->back()->withInput()->withErrors('保存失败！');
         }
@@ -59,7 +60,8 @@ class UserController extends Controller
         $note->title = $request->get('title');
         $note->path = $request->get('body');
         if ($note->save()) {
-            return redirect('user');
+            $notes=User::find(Auth::id())->Notes;
+            return redirect('home')->with(['notes' => $notes]);
         } else {
             return redirect()->back()->withInput()->withErrors('更新失败！');
         }

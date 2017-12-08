@@ -35,10 +35,14 @@
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
+                    <ul class="nav navbar-nav col-md-4 form-inline" role="form">
+                        &nbsp;<form action="{{ url('search') }}" method="POST">
+                            {!! csrf_field() !!}
+                            <input type="text" name="note" class="form-control" placeholder="请输入搜索内容" size="10">
+                            <input type="text" name="name" class="form-control" placeholder="请输入用户名" size="10">
+                            <button type="submit" class="btn btn-default">搜索</button>
+                        </form>
                     </ul>
-
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
