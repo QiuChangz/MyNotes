@@ -53,19 +53,18 @@
 
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="{{ url('home') }}">
+                                        <a href="{{ url('home')}}">
                                             home
                                         </a>
-                                    </li>
 
                                     <li>
-                                        <a href="{{ url('user') }}">
+                                        <a href="{{ url('user')}}">
                                             profile
                                         </a>
                                     </li>
 
                                     <li>
-                                        <a href="{{ route('logout') }}"
+                                        <a href="{{ url('user/followed') }}"
                                            onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                             followed
@@ -73,7 +72,7 @@
                                     </li>
 
                                     <li>
-                                        <a href="{{ route('logout') }}"
+                                        <a href="{{ url('user/following') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                             following

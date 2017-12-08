@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Notes;
+use App\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -14,8 +16,9 @@ class UserController extends Controller
         return view('user.profile');
     }
 
-    public function show($id){
-        return view('user')->withNotes(Note::with('hasManyNotes')->find($id));
+    public function show($user_id){
+        $notes=User::find($user_id)->Notes;
+        return view('home')->with(['notes' => $notes]);
     }
     public function create()
     {

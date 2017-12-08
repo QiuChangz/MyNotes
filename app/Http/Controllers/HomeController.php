@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Note;
+use App\Notes;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -24,6 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home')->withNotes(Note::all());
+        $notes=User::find(Auth::id())->Notes;
+        return view('home')->with(['notes' => $notes]);
     }
 }

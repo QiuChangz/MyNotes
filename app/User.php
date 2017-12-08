@@ -26,4 +26,13 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function getIdAttribute($value){
+        return ucfirst($value);
+    }
+
+    public function Notes()
+    {
+        return $this->hasMany('App\Note','user_id','id');
+    }
 }
