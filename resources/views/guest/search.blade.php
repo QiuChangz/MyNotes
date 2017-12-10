@@ -1,5 +1,14 @@
 @extends('layouts.app')
 
+@section('navbar')
+    <form action="{{ url('search') }}" method="POST">
+        {!! csrf_field() !!}
+        <input type="text" name="note" class="form-control" placeholder="请输入搜索内容" size="10" />
+        <input type="text" name="name" class="form-control" placeholder="请输入用户名" size="10" />
+        <button type="submit" class="btn btn-default">搜索</button>
+    </form>
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row">
@@ -13,6 +22,21 @@
                             </div>
                         @endif
 
+                        @foreach ($user_results as $user)
+                                <hr>
+                                <div class="user">
+                                    <h4>
+                                        <a href="{{ url($user->id.'/profile') }}" class="btn btn-lg" >{{ $user->name }}</a>
+                                    </h4>
+                                    <div class="content">
+                                        <p>
+                                            age:{{ $user->age }}
+                                        </p>
+                                    </div>
+                                </div>
+
+                            @endforeach
+
                         @foreach ($note_results as $note)
                             <hr>
                             <div class="note">
@@ -23,12 +47,7 @@
                                     </p>
                                 </div>
                             </div>
-                            <a href="{{ url('user/'.$note->id.'/edit') }}" class="btn btn-success">编辑</a>
-                            <form action="{{ url('user/'.$note->id) }}" method="POST" style="display: inline;">
-                                {{ method_field('DELETE') }}
-                                {{ csrf_field() }}
-                                <button type="submit" class="btn btn-danger">删除</button>
-                            </form>
+                            <a href="{{ url('user/'.$note->id.'/edit') }}" class="btn btn-success">查看</a>
                         @endforeach
 
                     </div>

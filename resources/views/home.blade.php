@@ -1,5 +1,14 @@
 @extends('layouts.app')
 
+@section('navbar')
+    <form action="{{ url('search') }}" method="POST">
+        {!! csrf_field() !!}
+        <input type="text" name="note" class="form-control" placeholder="请输入搜索内容" size="10">
+        <input type="text" name="name" class="form-control" placeholder="请输入用户名" size="10">
+        <button type="submit" class="btn btn-default">搜索</button>
+    </form>
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row">

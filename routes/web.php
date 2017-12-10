@@ -23,4 +23,8 @@ Route::resource('user','Admin\UserController');
 
 Route::get('user/{use_id}', 'Admin\UserController@show');
 
-Route::post('/search','Admin\SearchController@show');
+Route::post('/search','Admin\SearchController@index');
+
+Route::get('{user_id}/profile','Admin\SearchController@show');
+
+Route::resource('relation','Admin\RelationController');

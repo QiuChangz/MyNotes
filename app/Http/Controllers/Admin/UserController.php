@@ -13,7 +13,7 @@ class UserController extends Controller
 {
     //
     public function index(){
-        return view('user.profile');
+        return view('user.profile')->with('user',Auth::user());
     }
 
     public function show($user_id){
