@@ -21,7 +21,7 @@
                             <br>
                             <textarea name="body" rows="10" class="form-control" required="required" placeholder="请输入内容"></textarea>
                             <br>
-                            <button class="btn btn-lg btn-info">新增文章</button>
+                            <button class="btn btn-lg btn-info">新增笔记</button>
                         </form>
 
                     </div>

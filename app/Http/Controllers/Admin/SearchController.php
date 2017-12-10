@@ -29,21 +29,16 @@ class SearchController extends Controller
             $note = [];
         }
 
-        //if($note.isEmpty()||is_array($note)){}
         return view('guest.search')->with('note_results',$note)
                                         ->with('user_results',$user);
     }
 
     public function show($user_id){
-        $relations = Relation::find(Auth::id());
-        if(is_array($relations)){
-            foreach ($relations as $follow){
-                if($follow->following_id == $user_id){
-                    return view('user.profile')->with('user',User::find($user_id))->withRelation('followed');
-                }
+        $relations = Relation::where('user_id',Auth::id());
+        if($relations->where('following_id',$user_id)){
+            return view('user.profile')->with('user',User::find($user_id))->with('relation','followed');
             }
-        }
-        return view('user.profile')->with('user',User::find($user_id))->withRelation('following');
+        return view('user.profile')->with('user',User::find($user_id))->with('relation','following');
 
     }
 

@@ -63,17 +63,13 @@
                                     </li>
 
                                     <li>
-                                        <a href="{{ url('user/followed') }}"
-                                           onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                        <a href="{{ url('relation') }}">
                                             followed
                                         </a>
                                     </li>
 
                                     <li>
-                                        <a href="{{ url('user/following') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                        <a href="{{ url('relation/following') }}">
                                             following
                                         </a>
                                     </li>

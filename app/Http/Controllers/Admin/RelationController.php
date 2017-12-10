@@ -9,31 +9,48 @@
 namespace App\Http\Controllers\Admin;
 
 
-use Illuminate\Database\Eloquent\Model;
+use App\Http\Controllers\Controller;
+use App\User;
 use App\Relation;
 use Illuminate\Support\Facades\Auth;
 
-class RelationController extends Model
+class RelationController extends Controller
 {
+    public function index(){
+        $relation = Relation::find(Auth::id());
+        if(is_array($relation)){
+            foreach ($relation as $item) {
+                $following_id = $item->following_id;
+                $result = User::find($following_id);
+                $item->user_id = $result;
+            }
+        }
+        return view('user.followed')->with('relations',$relation);
+    }
+
     public function edit($user_id){
+
         $relation = new Relation();
         $relation->user_id = Auth::id();
         $relation->following_id = $user_id;
         $relation->permission = '可读';
-        $exits = Relation::find(Auth::id());//查询关系表中是否已经存在following关系
-        if(is_array($exits)){
-            foreach ($exits as $exit){
-                if($exit->following_id == $user_id){
-                    return redirect()->back()->withInput()->withErrors('您已经关注了对方！');
-                }
-            }
+        $relation->following_name = User::find($user_id)->name;
+        $exits = Relation::where('user_id',Auth::id());//查询关系表中是否已经存在following关系
+        if($exits->where('following_id',$user_id)){
+            return redirect()->back()->withInput()->withStatus('您已经关注了对方！');
         }
         if($relation->save()){
-            return redirect()->back()->withInput()->withRelation('followed');
+            return redirect()->back()->withInput()->with('relation','followed');
         } else {
             return redirect()->back()->withInput()->withErrors('保存失败！');
         }
 
+    }
+
+    public function destroy($id)
+    {
+        Relation::where('user_id',Auth::id())->where('following_id',$id)->delete();
+        return redirect()->back()->withInput()->withStatus('Unfollow Successfully！')->with('relation','following');
     }
 
 }

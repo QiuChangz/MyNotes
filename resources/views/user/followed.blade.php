@@ -1,7 +1,50 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: QiuSama
- * Date: 2017/12/8
- * Time: 9:15
- */
+
+@extends('layouts.app')
+
+@section('navbar')
+    <form action="{{ url('search') }}" method="POST">
+        {!! csrf_field() !!}
+        <input type="text" name="note" class="form-control" placeholder="请输入搜索内容" size="10">
+        <input type="text" name="name" class="form-control" placeholder="请输入用户名" size="10">
+        <button type="submit" class="btn btn-default">搜索</button>
+    </form>
+@endsection
+
+@section('content')
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+
+
+                        @if (count($errors) > 0)
+                            <div class="alert alert-danger">
+                                {!! implode('<br>', $errors->all()) !!}
+                            </div>
+                        @endif
+
+                        @if (session('status'))
+                            <div class="alert alert-success">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+
+                        @if(!$relations->isEmpty())
+                        @foreach($relations as $relation)
+                        <div class="panel-info">
+                            <a href="{{ url($relation->following_id.'/profile') }}" class="btn btn-lg" >{{ $relation->user_id }}</a>
+                        </div>
+                        @endforeach
+                        @else
+                                <div class="panel-content">
+                                    您暂时没有关注人哦，快去关注其他人吧！
+                                </div>
+                        @endif
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection

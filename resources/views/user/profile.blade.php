@@ -16,6 +16,12 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-body">
+                        @if (count($errors) > 0)
+                            <div class="alert alert-danger">
+                                {!! implode('<br>', $errors->all()) !!}
+                            </div>
+                        @endif
+
                         @if (session('status'))
                             <div class="alert alert-success">
                                 {{ session('status') }}
@@ -30,8 +36,14 @@
 
                             @if ($user->id == Auth::id())
                             <a href="{{ url('/user/create') }}" class="btn btn-lg btn-success col-xs-2">添加笔记</a>
+                            @elseif(str_contains($relation,'ed'))
+                                <form action="{{ url('relation/'.$user->id) }}" method="POST" style="display: inline;">
+                                    {{ method_field('DELETE') }}
+                                    {{ csrf_field() }}
+                                    <button type="submit" class="btn btn-danger">unfollow</button>
+                                </form>
                             @else
-                            <a href="{{ url('/relation/'.$user->id.'/edit') }}" class="btn btn-lg btn-success col-xs-2">{{ $relation }}</a>
+                                <a href="{{ url('/relation/'.$user->id.'/edit') }}" class="btn btn-lg btn-success col-xs-2">{{ $relation }}</a>
                             @endif
                         </div>
 

@@ -15,5 +15,10 @@ class Relation extends Model
 {
 
     protected $table = 'relation';
-    protected $fillable=['user_id','following_id','perssion'];
+    protected $fillable=['user_id','following_id','perssion','following_name'];
+
+    public function getFollowingIdAttribute($value){
+        return ucfirst($value);
+    }
+
 }

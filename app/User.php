@@ -31,6 +31,11 @@ class User extends Authenticatable
         return ucfirst($value);
     }
 
+    public function getNameAttribute($value)
+    {
+        return ucfirst($value);
+    }
+
     public function Notes()
     {
         return $this->hasMany('App\Note','user_id','id');
