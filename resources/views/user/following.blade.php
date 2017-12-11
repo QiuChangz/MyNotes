@@ -30,17 +30,17 @@
                             </div>
                         @endif
 
-                        @if(!empty($relations))
-                            @foreach($relations as $relation)
-                                    <div class="name">
-                                        <a href="{{ url($relation->following_id.'/profile') }}">{{ $relation->following_name }}</a>
+                            @if(!empty($relations))
+                                @foreach($relations as $relation)
+                                    <div class="panel-info">
+                                        <a href="{{ url($relation->user_id.'/profile') }}" class="btn btn-lg" >{{ $relation->following_name }}</a>
                                     </div>
-                            @endforeach
-                        @else
-                        <div class="panel-content">
-                            您暂时没有关注人哦，快去关注其他人吧！
-                        </div>
-                        @endif
+                                @endforeach
+                            @else
+                                <div class="panel-content">
+                                    您暂时没有粉丝，快去邀请好友！
+                                </div>
+                            @endif
 
                     </div>
                 </div>

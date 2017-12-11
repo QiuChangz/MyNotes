@@ -37,13 +37,15 @@
                             @if ($user->id == Auth::id())
                             <a href="{{ url('/user/create') }}" class="btn btn-lg btn-success col-xs-2">添加笔记</a>
                             @elseif(str_contains($relation,'ed'))
+                                <div name="unfollow">
                                 <form action="{{ url('relation/'.$user->id) }}" method="POST" style="display: inline;">
                                     {{ method_field('DELETE') }}
                                     {{ csrf_field() }}
                                     <button type="submit" class="btn btn-danger">unfollow</button>
                                 </form>
+                                </div>
                             @else
-                                <a href="{{ url('/relation/'.$user->id.'/edit') }}" class="btn btn-lg btn-success col-xs-2">{{ $relation }}</a>
+                                <a href="{{ url('/relation/'.$user->id.'/edit') }}" name='isFollowed' class="btn btn-lg btn-success col-xs-2" onclick="change()">{{ $relation }}</a>
                             @endif
                         </div>
 
@@ -52,4 +54,17 @@
             </div>
         </div>
     </div>
+    <script>
+        function change() {
+                $.ajax({
+                    method:'post',
+                    method_field:'DELETE',
+                    url:'relation/<?php echo $user->id;?>',
+                    success:function() {
+                        $(this).val('unfollow');
+                    }
+                })
+            }
+
+    </script>
 @endsection

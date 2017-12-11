@@ -34,8 +34,8 @@ class SearchController extends Controller
     }
 
     public function show($user_id){
-        $relations = Relation::where('user_id',Auth::id());
-        if($relations->where('following_id',$user_id)){
+        $relation = Relation::where('user_id',Auth::id());
+        if(empty($relation)&&$relation->where('following_id',$user_id)){
             return view('user.profile')->with('user',User::find($user_id))->with('relation','followed');
             }
         return view('user.profile')->with('user',User::find($user_id))->with('relation','following');

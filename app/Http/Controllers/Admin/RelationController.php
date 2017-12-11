@@ -17,14 +17,7 @@ use Illuminate\Support\Facades\Auth;
 class RelationController extends Controller
 {
     public function index(){
-        $relation = Relation::find(Auth::id());
-        if(is_array($relation)){
-            foreach ($relation as $item) {
-                $following_id = $item->following_id;
-                $result = User::find($following_id);
-                $item->user_id = $result;
-            }
-        }
+        $relation = Relation::where('user_id',Auth::id())->get();
         return view('user.followed')->with('relations',$relation);
     }
 
@@ -35,12 +28,12 @@ class RelationController extends Controller
         $relation->following_id = $user_id;
         $relation->permission = '可读';
         $relation->following_name = User::find($user_id)->name;
-        $exits = Relation::where('user_id',Auth::id());//查询关系表中是否已经存在following关系
-        if($exits->where('following_id',$user_id)){
-            return redirect()->back()->withInput()->withStatus('您已经关注了对方！');
+        $exits = Relation::where('user_id',Auth::id())->get();//查询关系表中是否已经存在following关系
+        if($exits->contains('following_id',$user_id)){
+            return redirect()->back()->withInput()->withStatus('您已经关注过对方了！');
         }
         if($relation->save()){
-            return redirect()->back()->withInput()->with('relation','followed');
+            return redirect()->back()->withInput()->withStatus('成功关注了对方！');
         } else {
             return redirect()->back()->withInput()->withErrors('保存失败！');
         }
@@ -53,4 +46,11 @@ class RelationController extends Controller
         return redirect()->back()->withInput()->withStatus('Unfollow Successfully！')->with('relation','following');
     }
 
+    public function show(){
+        $following = Relation::where('following_id',Auth::id())->get();
+        foreach ($following as $relation){
+            $relation->following_name = User::find($relation->user_id)->value('name');
+        }
+        return view('user.following')->with('relations',$following);
+    }
 }

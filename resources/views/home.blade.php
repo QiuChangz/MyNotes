@@ -30,7 +30,7 @@
                                 <h4>{{ $note->title }}</h4>
                                 <div class="content">
                                     <p>
-                                        {{ $note->body }}
+                                        {{ $note->path }}
                                     </p>
                                 </div>
                             </div>
