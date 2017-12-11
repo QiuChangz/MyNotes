@@ -30,12 +30,17 @@
                             </div>
                         @endif
 
-                            @if(!empty($relations))
+                            <h4>您的关注人数：{{ count($relations) }}</h4>
+                            @if(count($relations)>0)
+                                <ul class="list-group">
                                 @foreach($relations as $relation)
                                     <div class="panel-info">
+                                        <li class="list-group-item">
                                         <a href="{{ url($relation->user_id.'/profile') }}" class="btn btn-lg" >{{ $relation->following_name }}</a>
+                                        </li>
                                     </div>
                                 @endforeach
+                                </ul>
                             @else
                                 <div class="panel-content">
                                     您暂时没有粉丝，快去邀请好友！

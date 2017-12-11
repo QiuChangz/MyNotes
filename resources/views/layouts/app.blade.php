@@ -73,6 +73,12 @@
                                             following
                                         </a>
                                     </li>
+
+                                    <li>
+                                        <a href="{{ url('relation/create') }}">
+                                            moments
+                                        </a>
+                                    </li>
                                     <li>
                                         <a href="{{ route('logout') }}"
                                            onclick="event.preventDefault();

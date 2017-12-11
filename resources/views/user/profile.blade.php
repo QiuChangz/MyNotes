@@ -31,6 +31,7 @@
                             <div class="panel-content">用户名：{{ $user->name }}</div>
                             <div class="panel-content">年龄：{{ $user->age }}</div>
                             <div class="panel-content">邮箱：{{ $user->email }}</div>
+
                         </div>
                         <div class="panel-body">
 
@@ -45,7 +46,7 @@
                                 </form>
                                 </div>
                             @else
-                                <a href="{{ url('/relation/'.$user->id.'/edit') }}" id='isFollowing' class="btn btn-lg btn-success col-xs-2" v-on:click="onchange()">{{ $relation }}</a>
+                                <a href="{{ url('/relation/'.$user->id.'/edit') }}" id='isFollowing' class="btn btn-lg btn-success col-xs-2">{{ $relation }}</a>
                             @endif
                         </div>
 
@@ -54,18 +55,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        function onchange(){
-            $.ajax({
-                method:'post',
-                method_field:'DELETE',
-                url:'relation/<?php echo $user->id?>',
-                success:function(){
-
-                    $(this).val('unfollow');
-                }
-            })
-        }
-    </script>
 @endsection

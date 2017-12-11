@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Http\Controllers\Controller;
+use App\Note;
 use App\User;
 use App\Relation;
 use Illuminate\Support\Facades\Auth;
@@ -53,4 +54,20 @@ class RelationController extends Controller
         }
         return view('user.following')->with('relations',$following);
     }
+
+    public function create(){
+        $followers = Relation::where('following_id',Auth::id())->get();
+        $result=array();
+        foreach ($followers as $follower){
+            $notes = Note::where('user_id',$follower->user_id)->get();
+
+            foreach ($notes as $note){
+                $note_content = array($note->title=>$note->path);
+                array_add($result,$follower->name,$note_content);
+                return view('user.moments')->withNotes($result)->withFollowers($notes);
+            }
+        }
+        return view('user.moments')->withNotes($result);
+    }
+
 }

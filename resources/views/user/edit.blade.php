@@ -22,8 +22,9 @@
                             <br>
                             <textarea name="body" rows="10" class="form-control" required="required" placeholder="请输入内容">{{ $note->path }}</textarea>
                             <br>
+                            <input type="file" class="form-control" name="file">
                             <button class="btn btn-lg btn-info">提交修改</button>
-                            <button class="btn btn-default btn-info">取消</button>
+                            <button class="btn btn-lg btn-info">取消</button>
                         </form>
 
                     </div>

@@ -30,21 +30,26 @@
                             </div>
                         @endif
 
-                            <h4>您的粉丝数：{{ count($relations) }}</h4>
-                        @if(count($relations)>0)
-                            <ul class="list-group">
-                            @foreach($relations as $relation)
-                                    <div class="panel-info">
-                                        <li class="list-group-item">
-                                            <a href="{{ url($relation->following_id.'/profile') }}" class="btn btn-lg" >{{ $relation->following_name }}</a>
-                                        </li>
-                                    </div>
+                        <h4>Moments</h4>
+                            @foreach($followers as $follow)
+                                <h1>{{ $follow->title }}</h1>
                             @endforeach
-                            </ul>
-                        @else
-                        <div class="panel-content">
-                            您暂时没有关注人哦，快去关注其他人吧！
-                        </div>
+                        @if(!empty($notes))
+                            <h1>asdfas</h1>
+                            @foreach($notes as $name=>$contents)
+                                @foreach($contents as $title=>$content)
+                                <div>
+                                    {{ $name }}
+                                </div>
+                                    <div>
+                                        {{ $title }}
+                                    </div>
+
+                                    <div>
+                                        {{ $content }}
+                                    </div>
+                                @endforeach
+                            @endforeach
                         @endif
 
                     </div>
