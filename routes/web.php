@@ -28,3 +28,5 @@ Route::post('/search','Admin\SearchController@index');
 Route::get('{user_id}/profile','Admin\SearchController@show');
 
 Route::resource('relation','Admin\RelationController');
+
+Route::get('user/{note_id}/download', 'Admin\UserController@download');

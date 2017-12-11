@@ -36,7 +36,7 @@
 
                             @if ($user->id == Auth::id())
                             <a href="{{ url('/user/create') }}" class="btn btn-lg btn-success col-xs-2">添加笔记</a>
-                            @elseif(str_contains($relation,'ed'))
+                            @elseif(str_contains($relation,'ed')||session('relation'))
                                 <div name="unfollow">
                                 <form action="{{ url('relation/'.$user->id) }}" method="POST" style="display: inline;">
                                     {{ method_field('DELETE') }}
@@ -45,7 +45,7 @@
                                 </form>
                                 </div>
                             @else
-                                <a href="{{ url('/relation/'.$user->id.'/edit') }}" name='isFollowed' class="btn btn-lg btn-success col-xs-2" onclick="change()">{{ $relation }}</a>
+                                <a href="{{ url('/relation/'.$user->id.'/edit') }}" id='isFollowing' class="btn btn-lg btn-success col-xs-2" v-on:click="onchange()">{{ $relation }}</a>
                             @endif
                         </div>
 
@@ -54,17 +54,18 @@
             </div>
         </div>
     </div>
-    <script>
-        function change() {
-                $.ajax({
-                    method:'post',
-                    method_field:'DELETE',
-                    url:'relation/<?php echo $user->id;?>',
-                    success:function() {
-                        $(this).val('unfollow');
-                    }
-                })
-            }
 
+    <script>
+        function onchange(){
+            $.ajax({
+                method:'post',
+                method_field:'DELETE',
+                url:'relation/<?php echo $user->id?>',
+                success:function(){
+
+                    $(this).val('unfollow');
+                }
+            })
+        }
     </script>
 @endsection

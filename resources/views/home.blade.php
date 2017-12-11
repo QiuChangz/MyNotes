@@ -40,6 +40,7 @@
                                 {{ csrf_field() }}
                                 <button type="submit" class="btn btn-danger">删除</button>
                             </form>
+                            <a href="{{ url('user/'.$note->id.'/download') }}" class="btn btn-success">下载</a>
                         @endforeach
 
                     </div>
