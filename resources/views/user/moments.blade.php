@@ -31,24 +31,21 @@
                         @endif
 
                         <h4>Moments</h4>
-                            @foreach($followers as $follow)
-                                <h1>{{ $follow->title }}</h1>
-                            @endforeach
                         @if(!empty($notes))
-                            <h1>asdfas</h1>
-                            @foreach($notes as $name=>$contents)
-                                @foreach($contents as $title=>$content)
-                                <div>
-                                    {{ $name }}
+                            @foreach($notes as $id=>$contents)
+                                <div class="panel">
+                                <div class="panel-title">
+                                    <a href="{{ url($contents['user_id'].'/profile') }}" class="btn btn-lg" >
+                                    {{ $contents['following_name'] }}
+                                    </a>
                                 </div>
-                                    <div>
-                                        {{ $title }}
+                                    <div class="panel-heading">
+                                        {{ $contents['title'] }}
                                     </div>
-
-                                    <div>
-                                        {{ $content }}
+                                    <div class="panel-body">
+                                        {{ $contents['content'] }}
                                     </div>
-                                @endforeach
+                                </div>
                             @endforeach
                         @endif
 

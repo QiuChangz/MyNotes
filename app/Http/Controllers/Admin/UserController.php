@@ -15,7 +15,8 @@ class UserController extends Controller
 {
     //
     public function index(){
-        return view('user.profile')->with('user',Auth::user());
+        $notes = Note::where('user_id',Auth::id())->get();
+        return view('user.profile')->with('user',Auth::user())->with('notes',$notes);
     }
 
     public function show($user_id){

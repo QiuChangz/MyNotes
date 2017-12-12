@@ -57,15 +57,19 @@ class RelationController extends Controller
 
     public function create(){
         $followers = Relation::where('following_id',Auth::id())->get();
-        $result=array();
+        $result=[];
         foreach ($followers as $follower){
             $notes = Note::where('user_id',$follower->user_id)->get();
-
+            $name = User::find($follower->user_id)->name;
+            $count=0;
             foreach ($notes as $note){
-                $note_content = array($note->title=>$note->path);
-                array_add($result,$follower->name,$note_content);
-                return view('user.moments')->withNotes($result)->withFollowers($notes);
+                $note_content = array('following_name'=>$name,
+                                        'user_id'=>$follower->user_id,
+                                        'title'=>$note->title,
+                                        'content'=>$note->path);
+                $result[$count++]=$note_content;
             }
+            return view('user.moments')->withNotes($result);
         }
         return view('user.moments')->withNotes($result);
     }

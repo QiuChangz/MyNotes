@@ -27,17 +27,18 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-                        <div class="panel-info">
-                            <div class="panel-content">用户名：{{ $user->name }}</div>
-                            <div class="panel-content">年龄：{{ $user->age }}</div>
-                            <div class="panel-content">邮箱：{{ $user->email }}</div>
 
-                        </div>
                         <div class="panel-body">
 
                             @if ($user->id == Auth::id())
                             <a href="{{ url('/user/create') }}" class="btn btn-lg btn-success col-xs-2">添加笔记</a>
                             @elseif(str_contains($relation,'ed')||session('relation'))
+                                <div class="panel-info">
+                                    <div class="panel-content">用户名：{{ $user->name }}</div>
+                                    <div class="panel-content">年龄：{{ $user->age }}</div>
+                                    <div class="panel-content">邮箱：{{ $user->email }}</div>
+
+                                </div>
                                 <div name="unfollow">
                                 <form action="{{ url('relation/'.$user->id) }}" method="POST" style="display: inline;">
                                     {{ method_field('DELETE') }}
@@ -45,10 +46,36 @@
                                     <button type="submit" class="btn btn-danger">unfollow</button>
                                 </form>
                                 </div>
+
+
                             @else
+                                <div class="panel-info">
+                                    <div class="panel-content">用户名：{{ $user->name }}</div>
+                                    <div class="panel-content">年龄：{{ $user->age }}</div>
+                                    <div class="panel-content">邮箱：{{ $user->email }}</div>
+
+                                </div>
                                 <a href="{{ url('/relation/'.$user->id.'/edit') }}" id='isFollowing' class="btn btn-lg btn-success col-xs-2">{{ $relation }}</a>
                             @endif
+
                         </div>
+
+
+                            @foreach($notes as $note)
+                                <div class="panel-title">
+                                    <div class="panel-content col-xs-2">
+                                        <h3>
+                                            <a href="{{ url($note->user_id.'/profile') }}" class="btn btn-lg" >{{ $note->title }}</a>
+                                        </h3>
+                                    </div>
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <div class="panel-body">
+                                        <h5>{{ $note->path }}</h5>
+                                    </div>
+                                </div>
+                            @endforeach
 
                     </div>
                 </div>
