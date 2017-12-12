@@ -56,21 +56,22 @@ class RelationController extends Controller
     }
 
     public function create(){
-        $followers = Relation::where('following_id',Auth::id())->get();
+        $followers = Relation::where('user_id',Auth::id())->get();
         $result=[];
+        $count=0;
         foreach ($followers as $follower){
-            $notes = Note::where('user_id',$follower->user_id)->get();
-            $name = User::find($follower->user_id)->name;
-            $count=0;
+            $notes = Note::where('user_id',$follower->following_id)->get();
             foreach ($notes as $note){
-                $note_content = array('following_name'=>$name,
-                                        'user_id'=>$follower->user_id,
+                $note_content = array('following_name'=>$follower->following_name,
+                                        'user_id'=>$follower->following_id,
+                                        'create_time'=>$note->created_at->toDateTimeString(),
                                         'title'=>$note->title,
                                         'content'=>$note->path);
-                $result[$count++]=$note_content;
+                $result[$note->created_at->toDateTimeString()]=$note_content;
             }
-            return view('user.moments')->withNotes($result);
         }
+        krsort($result);
+
         return view('user.moments')->withNotes($result);
     }
 

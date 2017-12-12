@@ -31,7 +31,32 @@
                         <div class="panel-body">
 
                             @if ($user->id == Auth::id())
+                            <div class="panel">
                             <a href="{{ url('/user/create') }}" class="btn btn-lg btn-success col-xs-2">添加笔记</a>
+                                <br/><br/>
+                            </div>
+                                @foreach($notes as $note)
+                                    <div class="panel">
+                                        <div class="panel-content col-xs-2">
+                                            <h3>
+                                                <a href="{{ url($note->user_id.'/profile') }}" class="btn btn-lg" >{{ $note->title }}</a>
+                                            </h3>
+                                        </div>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <div class="panel-body">
+                                            <h5>{{ $note->path }}</h5>
+                                        </div>
+                                        <a href="{{ url('user/'.$note->id.'/edit') }}" class="btn btn-success">编辑</a>
+                                        <form action="{{ url('user/'.$note->id) }}" method="POST" style="display: inline;">
+                                            {{ method_field('DELETE') }}
+                                            {{ csrf_field() }}
+                                            <button type="submit" class="btn btn-danger">删除</button>
+                                        </form>
+                                        <a href="{{ url('user/'.$note->id.'/download') }}" class="btn btn-success">下载</a>
+                                    </div>
+                                @endforeach
                             @elseif(str_contains($relation,'ed')||session('relation'))
                                 <div class="panel-info">
                                     <div class="panel-content">用户名：{{ $user->name }}</div>
@@ -48,6 +73,22 @@
                                 </div>
 
 
+                                @foreach($notes as $note)
+                                    <div class="panel">
+                                        <div class="panel-content col-xs-2">
+                                            <h3>
+                                                <a href="{{ url($note->user_id.'/profile') }}" class="btn btn-lg" >{{ $note->title }}</a>
+                                            </h3>
+                                        </div>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <div class="panel-body">
+                                            <h5>{{ $note->path }}</h5>
+                                        </div>
+                                    </div>
+                                @endforeach
+
                             @else
                                 <div class="panel-info">
                                     <div class="panel-content">用户名：{{ $user->name }}</div>
@@ -56,26 +97,25 @@
 
                                 </div>
                                 <a href="{{ url('/relation/'.$user->id.'/edit') }}" id='isFollowing' class="btn btn-lg btn-success col-xs-2">{{ $relation }}</a>
+                                <br/><br/><br/>
+                                @foreach($notes as $note)
+                                    <div class="panel">
+                                        <div class="panel-content col-xs-2">
+                                            <h3>
+                                                <a href="{{ url($note->user_id.'/profile') }}" class="btn btn-lg" >{{ $note->title }}</a>
+                                            </h3>
+                                        </div>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <div class="panel-body">
+                                            <h5>{{ $note->path }}</h5>
+                                        </div>
+                                    </div>
+                                @endforeach
                             @endif
 
                         </div>
-
-
-                            @foreach($notes as $note)
-                                <div class="panel-title">
-                                    <div class="panel-content col-xs-2">
-                                        <h3>
-                                            <a href="{{ url($note->user_id.'/profile') }}" class="btn btn-lg" >{{ $note->title }}</a>
-                                        </h3>
-                                    </div>
-                                    <br/>
-                                    <br/>
-                                    <br/>
-                                    <div class="panel-body">
-                                        <h5>{{ $note->path }}</h5>
-                                    </div>
-                                </div>
-                            @endforeach
 
                     </div>
                 </div>

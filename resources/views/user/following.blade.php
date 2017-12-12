@@ -30,7 +30,7 @@
                             </div>
                         @endif
 
-                            <h4>您的关注人数：{{ count($relations) }}</h4>
+                            <h4>您的粉丝数：{{ count($relations) }}</h4>
                             @if(count($relations)>0)
                                 <ul class="list-group">
                                 @foreach($relations as $relation)
